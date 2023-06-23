@@ -1,54 +1,18 @@
+maxProduct
 
-1.  What is a data structure?
-    
-    A data structure organizes and stores data in a computer to enable efficient access and modification. Types include arrays, lists, stacks, queues, trees, graphs, etc. Python lists, for instance, are mutable, ordered data structures that can hold varied data types.
-    
-2.  The seven properties of a Python list:
-    
-    -   Order: Python lists remember the order of items inserted.
-        
-    -   Accessibility: Any item can be accessed using its index.
-        
-    -   Mutability: They are mutable, meaning items can be added, removed, or changed.
-        
-    -   Size flexibility: The size of a Python list can grow or shrink as needed.
-        
-    -   Diversity of contents: They can contain items of any data type, and a single list can
-        
-        contain items of different data types.
-        
-    -   Nesting: Lists can contain other lists.
-        
-    -   Duplicate entries: Lists can contain duplicate entries.
-        
-    They are similar to what we discussed in class.
-        
-    
-    -   Reading - 1 steps
-        
-    -   Searching for a value not contained within the list - 100 steps
-        
-    -   Insertion at the beginning of the list - 101 steps
-        
-    -   Insertion at the end of the list - 1 step Amortized
-        
-    -   Deletion at the beginning of the list - 100 steps
-        
-    -   Deletion at the end of the list - 1 step
-        
-3.  Why do you need to study different data structures? Why is a list not sufficient?
-    
-    Different data structures cater to specific tasks and offer varied efficiency levels. Lists are versatile but not always efficient for operations like item searching. Other structures like trees and hash-based structures perform these tasks more efficiently. Advanced algorithms and systems often require specialized data structures like heaps, queues, or graphs.
-    
-4.  What is an algorithm?
-    
-    An algorithm is a step-by-step procedure for performing calculations or solving problems. In computer science, an algorithm is a sequence of steps or a set of rules that are followed to complete a task. This task can be anything from sorting a list of numbers to finding a path in a network or graph.
-    
-5.  Time complexity of algorithms is measured in terms of steps instead of pure time. Why is that?
-    
-    Time complexity, measured in steps, provides a machine-independent measure of algorithm efficiency. Unlike actual time, which varies across hardware and software, the step count remains consistent, allowing comparative efficiency evaluation across different computing environments.
-    
+The first solution uses brute force, examining each pair of numbers in the array. It uses two nested loops, the outer loop scanning each element, and the inner loop comparing it with the remaining elements. If a product larger than the previously recorded one is found, it replaces the maximum product and the pair that created it. Eventually, it subtracts one from each of the maximum pair and multiplies them for the final result. The time complexity is O(n^2) due to two nested loops, while the space complexity is O(1) since only a fixed number of variables are stored.
 
-6. We compared linear search to binary search. Which searching algorithm is better and why?
+The second solution sorts the array and multiplies the last two elements (the largest ones), subtracting one from each before multiplying as per the problem's requirement. The time complexity is O(n log n), the complexity of sorting, and the space complexity is O(1) assuming an in-place sort, otherwise, it can be O(n).
 
-Binary search is generally more efficient than linear search, but it requires that the list be sorted. Sorting a list can be an expensive operation in terms of time complexity, so if the list is not already sorted, the cost of sorting needs to be taken into account. Binary search works by repeatedly dividing the list in half and discarding the half that does not contain the item, achieving a time complexity of O(log n). On the other hand, linear search works by sequentially checking each element in the list, resulting in a time complexity of O(n). Therefore, if the list is already sorted or if we need to perform many search operations, binary search is often the better choice.
+The third solution keeps track of the two largest numbers in a single pass of the array, updating these two values as needed. For the case of two large negative numbers, it also tracks the two smallest numbers. The final result is the maximum of the products obtained from the largest and smallest pairs (each subtracted by one). The time complexity is O(n) for a single pass over the array, and the space complexity is O(1) for storing the pairs and their products. The main trick here is understanding that the maximum product could come from either the two largest numbers or the two smallest numbers, and efficiently tracking these pairs in one loop iteration.
+
+
+find_duplicates
+
+The first solution works by counting the occurrence of each number in a list using a dictionary. For every value, it checks if it's already in the dictionary. If not, it's added and its count is set to one. If it exists, its count is incremented. Finally, it iterates over the dictionary and adds values with a count greater than one to the result list. Its time complexity is O(n), where n is the number of elements in the list, and its space complexity is also O(n) in the worst-case scenario. This solution may not meet the problem's criteria if modifying the array or using more than O(1) extra space is not allowed.
+
+The second solution uses a list to keep track of seen elements. As it iterates over the list, it checks if each value is already in the seen list. If not, it's added. If it is, it's added to the result list. The time complexity is O(n^2) due to the O(n) operations involved in checking and adding values to the list, and the space complexity is O(n) in the worst-case scenario. Like the first solution, this one may not meet the problem's constraints if we cannot use more than O(1) extra space.
+
+The final solution uses the list indices to mark seen elements. When it encounters a number, it goes to the index equal to the absolute value of that number minus one and negates the value there. If a negative value is encountered, it means the index has been visited before, so the absolute value of that number is added to the result list. This solution complies with the problem's constraints as it uses O(1) extra space and doesn't rely on extra data structures. It has a time complexity of O(n) and a space complexity of O(1).
+
+You can step through the original list, showing how the 'seen' list gets updated and how duplicates are added to the result list. For the last solution, you can show how values at certain indices are negated and how duplicates are added to the result list when a negative value is found.
